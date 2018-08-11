@@ -163,18 +163,6 @@ class CustomHandler
 }
 ```
 
-## Custom Formatter
-
-Selain custom handler, formatter juga memungkinkan menggunakan formatter pihak ketiga, jika
-akan membuat custom formatter, pastikan formatter tersebut mengimplementasikan interface
-`LibForatter\Iface\Formatter`.
-
-Custom formatter harus memiliki method-method seperti di bawah:
-
-### ::format(string $name, object $object, array $options=[]): ?object
-
-### ::formatMany(string $name, array $object, array $options=[], string $fieldaskey=null): ?array
-
 ## Format Type
 
 ### boolean|bool
