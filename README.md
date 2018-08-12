@@ -87,7 +87,7 @@ return [
             '/name/' => [
                 'handler' => 'Class::method',
                 'collective' => false // true,
-                'field' => 'id', // null for collective=true only
+                'field' => 'id', // for collective=true only
             ]
         ]
     ]
@@ -183,12 +183,6 @@ nilai dari properti tersebut menjadi nilai dari field ini. Sementara penggunaan
 `sources` akan menguban niai ini menjadi object dengan properti sesuai dengan yang
 ditentukan.
 
-Properti `format` digunakan jika object hasil dari pengambilan ingin diformat lagi
-dengan format yang lain.
-
-Properti `formatter` digunakan jika object hasil ingin di format menggunakan custom
-formatter.
-
 ```php
 'field' => [
     'type' => 'clone',
@@ -205,9 +199,7 @@ formatter.
             'field' => 'user.age',
             'type' => 'number'  // optional
         ]
-    ],
-    'format' => 'other-format', // optional
-    'formatter' => 'Class'      // optional
+    ]
 ]
 ```
 
@@ -296,7 +288,7 @@ Object ini sekarang memiliki properti berikut:
 ```php
 $loc->long;
 $loc->lat;
-$loc->embed->google(string $devkey);
+$loc->embed->google(string $apikey);
 ```
 
 Nilai yang diharapkan yang bisa diubah menjadi lokasi adalah dalam format
