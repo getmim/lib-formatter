@@ -32,8 +32,7 @@ return [
             '/format-name/' => [
                 '/field-name/' => [
                     'type' => '/format-prop-type/',
-                    'format' => '/other-format-name/',
-                    'formatter' => 'Class'
+                    'format' => '/other-format-name/'
                 ],
                 'id' => [
                     'type' => 'number'
