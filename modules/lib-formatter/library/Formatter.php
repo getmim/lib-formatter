@@ -69,7 +69,7 @@ class Formatter implements \LibFormatter\Iface\Formatter
                 if(array_key_exists($field, $options))
                     $fopts = $options[$field];
                 elseif(in_array($field, $options))
-                    $fopts = false;
+                    $fopts = [];
 
                 $collective_data[$field] = $class::$method($values, $field, $objects, $format, $fopts);
             }
