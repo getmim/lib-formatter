@@ -130,4 +130,60 @@ class Main
 
         return \Mim::$app->router->to($router->name, $params);
     }
+
+    static function switch($value, string $field, object $object, object $format, $options){
+        $cases = $format->case;
+
+        $result = null;
+
+        foreach($cases as $case){
+            $other_field= $case->field;
+            $other_val  = null;
+            if(substr($other_field, 0, 1) === '$'){
+                $other_val = get_prop_value($object, substr($other_field,1));
+            }else{
+                $other_val = $object->{$other_field} ?? null;
+            }
+
+            $expect_val = $case->expected;
+            $operator   = $case->operator;
+
+            $match = false;
+
+            switch($operator){
+                case '=':
+                    $match = $other_val == $expect_val;
+                    break;
+                case '>':
+                    $match = $other_val > $expect_val;
+                    break;
+                case '>':
+                    $match = $other_val < $expect_val;
+                    break;
+                case '>=':
+                    $match = $other_val >= $expect_val;
+                    break;
+                case '<=':
+                    $match = $other_val <= $expect_val;
+                    break;
+                case 'in':
+                    $match = in_array($other_val, $expect_val);
+                    break;
+                case '!in':
+                    $match = !in_array($other_val, $expect_val);
+                    break;
+            }
+
+            if(!$match)
+                continue;
+
+            $result = $case->result;
+            break;
+        }
+
+        if(!$result)
+            return $value;
+
+        return Formatter::typeApply($result->type, $value, $field, $object, $result, $options);
+    }
 }

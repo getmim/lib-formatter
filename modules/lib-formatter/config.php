@@ -106,6 +106,10 @@ return [
             'router' => [
                 'handler' => 'LibFormatter\\Handler\\Main::router',
                 'collective' => FALSE
+            ],
+            'switch' => [
+                'handler' => 'LibFormatter\\Handler\\Main::switch',
+                'collective' => FALSE
             ]
         ]
     ]
