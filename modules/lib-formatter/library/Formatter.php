@@ -49,7 +49,7 @@ class Formatter implements \LibFormatter\Iface\Formatter
                     if(isset($object->$prop))
                         $collective_data[$field][] = $object->$prop;
                 }
-                if($collective_data[$field])
+                if(isset($collective_data[$field]))
                     $collective_data[$field] = array_unique($collective_data[$field]);
             }
 
