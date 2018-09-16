@@ -154,10 +154,13 @@ class Main
                 case '=':
                     $match = $other_val == $expect_val;
                     break;
+                case '!=':
+                    $match = $other_val != $expect_val;
+                    break;
                 case '>':
                     $match = $other_val > $expect_val;
                     break;
-                case '>':
+                case '<':
                     $match = $other_val < $expect_val;
                     break;
                 case '>=':
