@@ -13,8 +13,8 @@ class Text implements \JsonSerializable
     private $clean;
     private $safe;
 
-    public function __construct(string $text){
-        $this->value = $text;
+    public function __construct(string $text=null){
+        $this->value = $text ?? '';
     }
 
     public function __get($name){
