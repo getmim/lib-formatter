@@ -13,7 +13,9 @@ class DateTime extends \DateTime implements \JsonSerializable
     private $time;
     private $value;
 
-    public function __construct(string $time='now', \DateTimeZone $timezone=null){
+    public function __construct(string $time=null, \DateTimeZone $timezone=null){
+        if(is_null($time))
+            return;
         parent::__construct($time, $timezone);
         $this->value = $time;
         $this->time = $this->getTimestamp();
@@ -25,10 +27,10 @@ class DateTime extends \DateTime implements \JsonSerializable
     }
 
     public function __toString(){
-        return $this->format('c');
+        return $this->time ? $this->format('c') : '';
     }
 
     public function jsonSerialize(){
-        return $this->__toString();
+        return $this->time ? $this->__toString() : null;
     }
 }
