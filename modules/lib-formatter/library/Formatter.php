@@ -100,6 +100,8 @@ class Formatter implements \LibFormatter\Iface\Formatter
                 // put collective data
                 }else{
                     $value = $object->$cprop;
+                    if(is_object($value))
+                        $value = (string)$value;
                     if(isset($collective_data[$field][$value]))
                         $object->$field = $collective_data[$field][$value];
                     else
