@@ -9,7 +9,7 @@ namespace LibFormatter\Object;
 
 class Std implements \JsonSerializable
 {
-    protected $id;
+    public $id;
 
     public function __construct($id){
         $this->id = $id;
