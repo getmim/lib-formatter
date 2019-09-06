@@ -162,6 +162,35 @@ class CustomHandler
 }
 ```
 
+## Format Opsi
+
+### @rest
+
+Mengimplementasikan suatu format ke properti object yang mana properti tersebut tidak
+didefinisikan di format.
+
+```php
+    'format-name' => [
+        '@rest' => [
+            'type' => 'delete'
+        ],
+        'field' => [
+            'type' => '...'
+        ]
+    ]
+```
+
+### @rename
+
+Mengubah nama properti menjadi nama lain setelah melakukan proses formatting yang lain.
+
+```php
+'field' => [
+    'type' => '...',
+    '@rename' => 'field-other'
+]
+```
+
 ## Format Type
 
 ### boolean|bool

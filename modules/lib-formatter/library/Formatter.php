@@ -18,6 +18,17 @@ class Formatter implements \LibFormatter\Iface\Formatter
     }
 
     static function formatApply(object $formats, array $objects, array $options=[], string $askey=null): ?array{
+        if(isset($formats->{'@rest'})){
+            foreach($objects as $object){
+                foreach($object as $prop => $val){
+                    if(!isset($formats->$prop))
+                        $formats->$prop = $formats->{'@rest'};
+                }
+                break;
+            }
+            unset($formats->{'@rest'});
+        }
+
         $handlers = \Mim::$app->config->libFormatter->handlers;
         $collective_data = [];
 
@@ -106,6 +117,11 @@ class Formatter implements \LibFormatter\Iface\Formatter
                         $object->$field = $collective_data[$field][$value];
                     else
                         $object->$field = null;
+                }
+
+                if(isset($opts->{'@rename'})){
+                    $object->{$opts->{'@rename'}} = $object->$field;
+                    unset($object->$field);
                 }
             }
             unset($object);

@@ -51,7 +51,7 @@ class Main
     }
 
     static function delete($value, string $field, object &$object, object $format, $options){
-        if(isset($object->$field))
+        if(property_exists($object, $field))
             unset($object->$field);
     }
 
