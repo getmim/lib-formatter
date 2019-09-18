@@ -90,7 +90,13 @@ class Main
     }
 
     static function json($value, string $field, object $object, object $format, $options){
-        return json_decode($value);
+        $value = json_decode($value);
+        if(!isset($format->format))
+            return $value;
+
+        if(!is_array($options))
+            $options = [];
+        return Formatter::format($format->format, $value, $options);
     }
 
     static function join($value, string $field, object $object, object $format, $options){
