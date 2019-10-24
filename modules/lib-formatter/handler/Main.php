@@ -193,6 +193,20 @@ class Main
         if(!$result)
             return $value;
 
-        return Formatter::typeApply($result->type, $value, $field, $object, $result, $options);
+        $handler = \Mim::$app->config->libFormatter->handlers->{$result->type};
+
+        // for non collective
+        if(!$handler->collective)
+            return Formatter::typeApply($result->type, $value, $field, $object, $result, $options);
+
+        $handler = $handler->handler;
+
+        // for collective
+        $class  = $handler->class;
+        $method = $handler->method;
+        $format = $result;
+
+        $values = $class::$method([$value], $field, [$object], $format, $options);
+        return $values[$value] ?? $value;
     }
 }
