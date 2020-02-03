@@ -19,34 +19,4 @@ Jalankan perintah di bawah di folder aplikasi:
 mim app install lib-formatter
 ```
 
-## Konfigurasi
-
-Semua konfigurasi formatter disimpan di module masing-masing dengan bentuk
-seperti di bawah:
-
-```php
-return [
-    // ...
-    'libFormatter' => [
-        'formats' => [
-            '/format-name/' => [
-                '/field-name/' => [
-                    'type' => '/format-prop-type/',
-                    'format' => '/other-format-name/'
-                ],
-                'id' => [
-                    'type' => 'number'
-                ],
-                'about' => [
-                    'type' => 'text'
-                ]
-            ]
-        ]
-    ]
-    // ...
-];
-```
-
-## Penggunaan
-
 Untuk penggunaan yang lebih lengkap, silahkan mengacu pada dokumentasi di [sini](https://getmim.github.io/modules/lib-formatter/).

@@ -32,7 +32,7 @@ class Formatter implements \LibFormatter\Iface\Formatter
         $handlers = \Mim::$app->config->libFormatter->handlers;
         $collective_data = [];
 
-        // 1. Group properties by collective type.
+        // 1. Group properties by collectivity type.
         //  0 => non collective
         //  1 => collective
         $collectives = [[],[]];
@@ -41,7 +41,7 @@ class Formatter implements \LibFormatter\Iface\Formatter
             if(!isset($handlers->$type))
                 trigger_error('Handler for formatter type `' . $type . '` not found');
             $handler = $handlers->$type;
-            $index   = (int)$handler->collective;
+            $index   = $handler->collective ? 1 : 0;
             $collectives[$index][] = $field;
         }
 
@@ -88,8 +88,8 @@ class Formatter implements \LibFormatter\Iface\Formatter
 
         // 4. Process non collective, and put collective value
         foreach($formats as $field => $opts){
-            $type    = $opts->type;
-            $handler = $handlers->$type;
+            $type       = $opts->type;
+            $handler    = $handlers->$type;
             $collective = $handler->collective;
 
             // for non collective data
@@ -101,6 +101,8 @@ class Formatter implements \LibFormatter\Iface\Formatter
 
             // for collective data
             $cprop = $handler->field ?? $field;
+            if(is_string($collective))
+                $cprop = $collective;
 
             foreach($objects as &$object){
                 if(!$collective){
