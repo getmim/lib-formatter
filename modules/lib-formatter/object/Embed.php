@@ -21,6 +21,7 @@ class Embed implements \JsonSerializable
 
     private function _parse(){
         $regexs = [
+            '/youtube\.com\/embed\/live_stream\?channel\=(?<id>.+)/'                        => 'youtube-live-stream',
             '/youtube.com\/embed\/(?<id>[\w_-]+)/i'                                         => 'youtube',
             '/youtube\.com(.+)v=(?<id>[\w_-]+)/'                                            => 'youtube',
             '/youtu\.be\/(?<id>[\w_-]+)/'                                                   => 'youtube',
@@ -283,6 +284,20 @@ class Embed implements \JsonSerializable
             ],
             'youtube' => [
                 'url' => 'https://www.youtube.com/embed/(:id)?rel=0',
+                'width' => 560,
+                'height' => 314,
+                'html' => 
+                      '<iframe '
+                    .   'allowFullscreen="1" '
+                    .   'frameborder="0" '
+                    .   'height="(:height)" '
+                    .   'scrolling="no" '
+                    .   'src="(:url)" '
+                    .   'width="(:width)">'
+                    . '</iframe>'
+            ],
+            'youtube-live-stream' => [
+                'url' => 'https://www.youtube.com/embed/live_stream?channel=(:id)',
                 'width' => 560,
                 'height' => 314,
                 'html' => 
