@@ -96,6 +96,9 @@ class Main
 
         if(!is_array($options))
             $options = [];
+
+        if(is_array($value))
+            return Formatter::formatMany($format->format, $value, $options);
         return Formatter::format($format->format, $value, $options);
     }
 
