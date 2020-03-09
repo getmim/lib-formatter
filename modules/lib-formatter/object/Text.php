@@ -34,8 +34,10 @@ class Text implements \JsonSerializable
     }
 
     public function getClean(){
-        if(is_null($this->clean))
-            $this->clean = new Text(preg_replace('![^a-zA-Z0-9 ]!', '', $this->value));
+        if(is_null($this->clean)){
+            $text = preg_replace('!<[^>]+>!', '', $this->value);
+            $this->clean = new Text(preg_replace('![^a-zA-Z0-9 ]!', '', $text));
+        }
         return $this->clean;
     }
 
@@ -51,8 +53,13 @@ class Text implements \JsonSerializable
 
     public function words(int $len): string{
         $index = -1;
-        for($i=0; $i<$len; $i++)
+        for($i=0; $i<$len; $i++){
             $index = strpos($this->value, ' ', $index+1);
+            if(false === $index){
+                $index = strlen($this->value);
+                break;
+            }
+        }
         return trim(substr($this->value, 0, $index));
     }
 }
