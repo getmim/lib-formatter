@@ -345,8 +345,8 @@ class Embed implements \JsonSerializable
             $this->html = str_replace('(:' . $prop . ')', $this->$prop, $this->html);
     }
 
-    public function __construct(string $source){
-        $this->value = $source;
+    public function __construct(string $source=null){
+        $this->value = $source ?? '';
     }
 
     public function __get($name){

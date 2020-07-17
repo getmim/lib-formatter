@@ -2,7 +2,7 @@
 
 return [
     '__name' => 'lib-formatter',
-    '__version' => '0.3.1',
+    '__version' => '0.4.0',
     '__git' => 'git@github.com:getmim/lib-formatter.git',
     '__license' => 'MIT',
     '__author' => [
@@ -59,6 +59,10 @@ return [
                 'handler' => 'LibFormatter\\Handler\\Main::clone',
                 'collective' => FALSE
             ],
+            'custom' => [
+                'handler' => 'LibFormatter\\Handler\\Main::custom',
+                'collective' => FALSE
+            ],
             'date' => [
                 'handler' => 'LibFormatter\\Handler\\Main::date',
                 'collective' => FALSE
@@ -71,8 +75,8 @@ return [
                 'handler' => 'LibFormatter\\Handler\\Main::embed',
                 'collective' => FALSE
             ],
-            'custom' => [
-                'handler' => 'LibFormatter\\Handler\\Main::custom',
+            'interval' => [
+                'handler' => 'LibFormatter\\Handler\\Main::interval',
                 'collective' => FALSE
             ],
             'location' => [

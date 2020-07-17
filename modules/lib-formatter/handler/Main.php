@@ -11,6 +11,7 @@ use LibFormatter\Library\Formatter;
 use LibFormatter\Object\{
     DateTime,
     Embed,
+    Interval,
     Location,
     Number,
     Text
@@ -42,6 +43,14 @@ class Main
         }
     }
 
+    static function custom($value, string $field, object &$object, object $format, $options){
+        $handler = explode('::', $format->handler);
+        $class   = $handler[0];
+        $method  = $handler[1];
+
+        return $class::$method($value, $field, $object, $format, $options);
+    }
+
     static function date($value, string $field, object $object, object $format, $options){
         if(isset($format->timezone))
             $value = new DateTime($value, new \DateTimeZone($format->timezone));
@@ -59,12 +68,8 @@ class Main
         return new Embed($value);
     }
 
-    static function custom($value, string $field, object &$object, object $format, $options){
-        $handler = explode('::', $format->handler);
-        $class   = $handler[0];
-        $method  = $handler[1];
-
-        return $class::$method($value, $field, $object, $format, $options);
+    static function interval($value, string $field, object $object, object $format, $options){
+        return new Interval($value);
     }
 
     static function location($value, string $field, object $object, object $format, $options){
