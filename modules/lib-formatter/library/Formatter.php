@@ -40,6 +40,7 @@ class Formatter implements \LibFormatter\Iface\Formatter
             $type    = $opts->type;
             if(!isset($handlers->$type))
                 trigger_error('Handler for formatter type `' . $type . '` not found');
+            
             $handler = $handlers->$type;
             $index   = $handler->collective ? 1 : 0;
             $collectives[$index][] = $field;
@@ -49,9 +50,9 @@ class Formatter implements \LibFormatter\Iface\Formatter
         if($collectives[1]){
             $collect_prop = [];
             foreach($collectives[1] as $field){
-                $type = $formats->$field->type;
+                $type    = $formats->$field->type;
                 $handler = $handlers->$type;
-                $prop = $handler->field ?? $field;
+                $prop    = $handler->field ?? $field;
                 $collect_prop[$field] = $prop;
             }
 
@@ -112,9 +113,14 @@ class Formatter implements \LibFormatter\Iface\Formatter
                         $object->$field = $res;
                 // put collective data
                 }else{
-                    $value = $object->$cprop;
+                    $value = $object->$cprop ?? null;
+
                     if(is_object($value))
                         $value = (string)$value;
+                    
+                    if($cprop === '_MD5_')
+                        $value = md5($object->$field);
+
                     if(isset($collective_data[$field][$value]))
                         $object->$field = $collective_data[$field][$value];
                     else
