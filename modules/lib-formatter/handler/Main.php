@@ -2,7 +2,7 @@
 /**
  * Main formatter handler
  * @package lib-formatter
- * @version 0.0.1
+ * @version 0.5.1
  */
 
 namespace LibFormatter\Handler;
@@ -73,6 +73,8 @@ class Main
     }
 
     static function location($value, string $field, object $object, object $format, $options){
+        if(!$value)
+            return null;
         return new Location($value);
     }
 
