@@ -2,7 +2,7 @@
 /**
  * Formatter
  * @package lib-formatter
- * @version 0.0.1
+ * @version 0.6.0
  */
 
 namespace LibFormatter\Library;
@@ -18,6 +18,7 @@ class Formatter implements \LibFormatter\Iface\Formatter
     }
 
     static function formatApply(object $formats, array $objects, array $options=[], string $askey=null): ?array{
+        // implement format for rest property
         if(isset($formats->{'@rest'})){
             foreach($objects as $object){
                 foreach($object as $prop => $val){
@@ -27,6 +28,18 @@ class Formatter implements \LibFormatter\Iface\Formatter
                 break;
             }
             unset($formats->{'@rest'});
+        }
+
+        // apply default value for falsy value
+        foreach($formats as $field => $opts) {
+            if(!isset($opts->{'@default'}))
+                continue;
+
+            foreach($objects as &$object) {
+                if(!isset($object->$field) || !$object->$field)
+                    $object->$field = $opts->{'@default'};
+            }
+            unset($object);
         }
 
         $handlers = \Mim::$app->config->libFormatter->handlers;
@@ -40,7 +53,7 @@ class Formatter implements \LibFormatter\Iface\Formatter
             $type    = $opts->type;
             if(!isset($handlers->$type))
                 trigger_error('Handler for formatter type `' . $type . '` not found');
-            
+
             $handler = $handlers->$type;
             $index   = $handler->collective ? 1 : 0;
             $collectives[$index][] = $field;
@@ -117,7 +130,7 @@ class Formatter implements \LibFormatter\Iface\Formatter
 
                     if(is_object($value))
                         $value = (string)$value;
-                    
+
                     if($cprop === '_MD5_')
                         $value = md5($object->$field);
 
