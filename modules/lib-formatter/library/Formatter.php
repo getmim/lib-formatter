@@ -17,6 +17,8 @@ class Formatter implements \LibFormatter\Iface\Formatter
             return self::$authorized;
 
         self::$authorized = \Mim::$app->user->isLogin();
+
+        return self::$authorized;
     }
 
     public static function format (
