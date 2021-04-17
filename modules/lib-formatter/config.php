@@ -2,7 +2,7 @@
 
 return [
     '__name' => 'lib-formatter',
-    '__version' => '0.6.0',
+    '__version' => '0.7.0',
     '__git' => 'git@github.com:getmim/lib-formatter.git',
     '__license' => 'MIT',
     '__author' => [

@@ -19,4 +19,5 @@ Jalankan perintah di bawah di folder aplikasi:
 mim app install lib-formatter
 ```
 
-Untuk penggunaan yang lebih lengkap, silahkan mengacu pada dokumentasi di [sini](https://getmim.github.io/modules/lib-formatter/).
+Untuk penggunaan yang lebih lengkap, silahkan mengacu pada dokumentasi di
+[sini](https://getmim.github.io/modules/lib-formatter/).

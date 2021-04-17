@@ -2,22 +2,41 @@
 /**
  * Formatter
  * @package lib-formatter
- * @version 0.6.0
+ * @version 0.7.0
  */
 
 namespace LibFormatter\Library;
 
 class Formatter implements \LibFormatter\Iface\Formatter
 {
+    protected static $authorized = null;
 
-    static function format(string $format, object $object, array $options=[]): ?object{
+    protected static function isLogin ()
+    {
+        if(!is_null(self::$authorized))
+            return self::$authorized;
+
+        self::$authorized = \Mim::$app->user->isLogin();
+    }
+
+    public static function format (
+        string $format,
+        object $object,
+        array $options=[]
+    ): ?object {
         $result = self::formatMany($format, [$object], $options);
         if(!$result)
             return null;
         return $result[0];
     }
 
-    static function formatApply(object $formats, array $objects, array $options=[], string $askey=null): ?array{
+    static function formatApply(
+        object $formats,
+        array $objects,
+        array $options = [],
+        string $askey = null
+    ): ?array {
+
         // implement format for rest property
         if(isset($formats->{'@rest'})){
             foreach($objects as $object){
@@ -31,13 +50,19 @@ class Formatter implements \LibFormatter\Iface\Formatter
         }
 
         // apply default value for falsy value
+        // apply unauthorized for non logged in user
         foreach($formats as $field => $opts) {
-            if(!isset($opts->{'@default'}))
+            $def = $opts->{'@default'} ?? NULL;
+            $una = $opts->{'@unauthorized'} ?? NULL;
+
+            if(!$def && !$una)
                 continue;
 
             foreach($objects as &$object) {
-                if(!isset($object->$field) || !$object->$field)
-                    $object->$field = $opts->{'@default'};
+                if($def && (!isset($object->$field) || !$object->$field))
+                    $object->$field = $def;
+                if($una && !self::isLogin())
+                    $object->$field = $una;
             }
             unset($object);
         }
@@ -52,7 +77,7 @@ class Formatter implements \LibFormatter\Iface\Formatter
         foreach($formats as $field => $opts){
             $type    = $opts->type;
             if(!isset($handlers->$type))
-                trigger_error('Handler for formatter type `' . $type . '` not found');
+                trigger_error('Handler for type `' . $type . '` not found');
 
             $handler = $handlers->$type;
             $index   = $handler->collective ? 1 : 0;
