@@ -35,7 +35,8 @@ class Number implements \JsonSerializable
         return number_format($this->final, $dec, $dsep, $tsep);
     }
 
-    public function jsonSerialize(){
+    #[\ReturnTypeWillChange]
+    public function jsonSerialize() {
         return $this->final;
     }
 }

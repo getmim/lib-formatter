@@ -47,6 +47,7 @@ class Text implements \JsonSerializable
         return $this->safe;
     }
 
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(){
         return $this->__toString();
     }

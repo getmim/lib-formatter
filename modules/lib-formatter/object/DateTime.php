@@ -30,6 +30,7 @@ class DateTime extends \DateTime implements \JsonSerializable
         return $this->time ? $this->format('c') : '';
     }
 
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(){
         return $this->time ? $this->__toString() : null;
     }

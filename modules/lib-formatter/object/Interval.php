@@ -65,6 +65,7 @@ class Interval implements \JsonSerializable
         return $this->DateTime->format($format);
     }
 
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(){
         if(!$this->value)
             return null;

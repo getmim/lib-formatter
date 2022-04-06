@@ -19,6 +19,7 @@ class Std implements \JsonSerializable
         return (string)$this->id;
     }
 
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(){
         return (object)['id'=>$this->id];
     }

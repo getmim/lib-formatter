@@ -31,6 +31,7 @@ class Location implements \JsonSerializable
         return $this->value;
     }
 
+    #[\ReturnTypeWillChange]
     public function jsonSerialize(){
         return $this->__toString();
     }
