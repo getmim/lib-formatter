@@ -51,11 +51,18 @@ class Main
         return $class::$method($value, $field, $object, $format, $options);
     }
 
-    static function date($value, string $field, object $object, object $format, $options){
-        if(isset($format->timezone))
+    static function date($value, string $field, object $object, object $format, $options)
+    {
+        if (!$value) {
+            return null;
+        }
+
+        if (isset($format->timezone)) {
             $value = new DateTime($value, new \DateTimeZone($format->timezone));
-        else
+        } else {
             $value = new DateTime($value);
+        }
+
         return $value;
     }
 
