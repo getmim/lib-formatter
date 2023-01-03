@@ -103,16 +103,24 @@ class Main
         return new Text($value);
     }
 
-    static function json($value, string $field, object $object, object $format, $options){
-        $value = json_decode($value);
-        if(!isset($format->format))
+    static function json($value, string $field, object $object, object $format, $options)
+    {
+        if (is_null($value)) {
             return $value;
+        }
+        $value = json_decode($value);
+        if (!isset($format->format)) {
+            return $value;
+        }
 
-        if(!is_array($options))
+        if (!is_array($options)) {
             $options = [];
+        }
 
-        if(is_array($value))
+        if (is_array($value)) {
             return Formatter::formatMany($format->format, $value, $options);
+        }
+
         return Formatter::format($format->format, $value, $options);
     }
 
