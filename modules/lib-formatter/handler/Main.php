@@ -108,7 +108,10 @@ class Main
         if (is_null($value)) {
             return $value;
         }
-        $value = json_decode($value);
+        if (is_string($value)) {
+            $value = json_decode($value);
+        }
+
         if (!isset($format->format)) {
             return $value;
         }
