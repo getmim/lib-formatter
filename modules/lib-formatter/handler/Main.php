@@ -100,6 +100,11 @@ class Main
     }
 
     static function text($value, string $field, object $object, object $format, $options){
+        if (isset($format->default)) {
+            if (!$value) {
+                $value = $format->default;
+            }
+        }
         return new Text($value);
     }
 
